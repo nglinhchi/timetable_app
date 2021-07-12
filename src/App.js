@@ -78,13 +78,13 @@ function App() {
   for (let i =0; i < events.length;i++){
     if (events[i].name === roomName){
       for(let j =0; j< events[i].member.length;j++){
-        console.log(events[i].member[j], nameRef.current.value)
         if (events[i].member[j] === nameRef.current.value){
           if (check(roomName)){
+            console.log(nameRef.current.value)
             setRoomName(roomName)
             const location = {
             pathname: "/room/"+ roomName,
-            state: {name: roomName}
+            state: {name: roomName,user: nameRef.current.value}
           }
           history.push(location)
           return
