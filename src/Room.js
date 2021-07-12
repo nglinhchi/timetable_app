@@ -6,7 +6,7 @@ import firebase from './firebase'
 export default function Room(){
     const style = {
         color:'black'
-    };
+    }
     const [events, setEvent] = useState([])
     const typeRef= useRef()
     const memberRef= useRef()
@@ -20,7 +20,7 @@ export default function Room(){
     const db = firebase.database()
     const eventRef = db.ref("events")
     const user = history.location.state.user
-    console.log(user)
+    console.log(history.location.state)
     function Chat(id){
         let list = events
         if (
