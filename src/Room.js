@@ -20,14 +20,13 @@ export default function Room(){
     const db = firebase.database()
     const eventRef = db.ref("events")
     const user = history.location.state.user
-    console.log(history.location.state)
+
     function Chat(id){
         let list = events
         if (
             typeRef.current.value === "" ||
             unitRef.current.value ==="" ||
             duarationRef.current.value ==="" ||
-            belongRef.current.value ==="" ||
             startTimeRef.current.value ==="" ||
             dayRef.current.value ===""
         ){
@@ -36,10 +35,17 @@ export default function Room(){
         }
         for ( let i =0; i < events.length;i++){
             if( events[i].name === roomName){
-                for( let j= 1; j < events[i].chat.length;j++){
-                    if (events[i].chat[j].unit ===unitRef.current.value && events[i].chat[j].classType ===typeRef.current.value && events[i].chat[j].belongTo ===belongRef.current.value ){
-                        list[i].chat[j].time.push({day: dayRef.current.value,start: startTimeRef.current.value})
+                for( let j= 1; j < events[i].classes.length;j++){
+                    if (events[i].classes[j].unit ===unitRef.current.value && events[i].classes[j].classType ===typeRef.current.value && events[i].classes[j].belongTo ===user ){
+                        list[i].classes[j].time.push({day: dayRef.current.value,start: startTimeRef.current.value})
+                        console.log(checkDayTime(typeRef.current.value,unitRef.current.value,user,startTimeRef.current.value, dayRef.current.value))
+                        if (checkDayTime(typeRef.current.value,unitRef.current.value,user,startTimeRef.current.value, dayRef.current.value)){
+                            alert("Repeated session")
+                            return 
+                        }
                         setEvent([...list])
+                        startTimeRef.current.value=""
+                        dayRef.current.value=""
                         return
                     }
                 }
@@ -47,11 +53,11 @@ export default function Room(){
         }
         for ( let i =0; i < list.length;i++){
             if (list[i].id === id){
-                list[i].chat.push({
+                list[i].classes.push({
                     classType: typeRef.current.value,
                     unit: unitRef.current.value,
                     duaration: duarationRef.current.value,
-                    belongTo: belongRef.current.value,
+                    belongTo: user,
                     time: [{
                         start: startTimeRef.current.value,
                         day: dayRef.current.value
@@ -109,10 +115,28 @@ export default function Room(){
         }
         return true
     }
+    function checkDayTime(type,unit, user,start,day){
+        console.log("1")
+        for (let i=0; i< events.length;i++){
+            if (events[i].name=== roomName){
+                console.log("2")
+                for (let j =1; j < events[i].classes.length; j++ ){
+                    if (type === events[i].classes[j].classType && unit ===events[i].classes[j].unit && user ===events[i].classes[j].belongTo) {
+                        console.log("3")
+                        for ( let z = 0; z < events[i].classes[j].time.length;z++){
+                            if (start ===events[i].classes[j].time[z].start && day === events[i].classes[j].time[z].day )
+                            console.log("4")
+                            return true
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
     useEffect(()=>{
         if (events.length !== 0 ){
-            console.log("updated")
-            console.log(events)
+          
           eventRef.set(events);
         }
     },[events])
@@ -158,11 +182,11 @@ export default function Room(){
                     <input ref={unitRef} type ="text"/> 
                     <label>Unit</label> 
                     <br></br>
-                    <input value={user} ref={belongRef} type ="text"/> 
+                    {/* <input value={user} ref={belongRef} type ="text"/> 
                     <label>Member name</label> 
-                    <br></br>
+                    <br></br> */}
                     <input ref={duarationRef} type ="text"/> 
-                    <label>Duaration</label> 
+                    <label>Duration</label> 
                     <br></br>
                     <input ref={startTimeRef} type ="text"/>  
                     <label>Start time</label> 
@@ -183,10 +207,10 @@ export default function Room(){
                     }} >Delete group</button>
 
     
-                    {event.chat.map(chat =>{
-                        if(chat !== "test" && chat.belongTo===user){
+                    {event.classes.map(classes =>{
+                        if(classes !== "test" && classes.belongTo===user){
                         return <div>
-                                <h1>{chat.unit}-{chat.classType}</h1>
+                                <h1>{classes.unit}-{classes.classType}</h1>
                                 <button onClick={()=>{
                                     if((!window.confirm("Delete this class?"))){
                                         return
@@ -195,9 +219,9 @@ export default function Room(){
                                     const list = events
                                     for ( let i =0; i < events.length;i++){
                                         if( events[i].name === roomName){
-                                            for( let j= 1; j < events[i].chat.length;j++){
-                                                if (events[i].chat[j].unit ===unitRef.current.value && events[i].chat[j].classType ===typeRef.current.value && events[i].chat[j].belongTo ===belongRef.current.value ){
-                                                    list[i].chat.splice(j,1)
+                                            for( let j= 1; j < events[i].classes.length;j++){
+                                                if (events[i].classes[j].unit ===unitRef.current.value && events[i].classes[j].classType ===typeRef.current.value ){
+                                                    list[i].classes.splice(j,1)
                                                     setEvent([...list])
                                                     return
                                                 }
@@ -206,7 +230,7 @@ export default function Room(){
                                     }
 
                                 }}>Delete class</button>
-                                {chat.time.map(time=>{
+                                {classes.time.map(time=>{
                                     return <p>{time.start}-{time.day}</p>
                                 })}
                             </div>

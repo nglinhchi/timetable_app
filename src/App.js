@@ -1,5 +1,5 @@
 
-import Events from './Events';
+
 import './App.css';
 import { useState,useEffect, useRef } from 'react';
 import firebase from './firebase'
@@ -9,6 +9,9 @@ import {useHistory} from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 function App() {
   
+
+
+
   // console.log(store)
   // const eventRef = db.ref("events")
   // const eventsss = 
@@ -54,7 +57,7 @@ function App() {
   function addEvent(){
     const name = eventNameRef.current.value
     if (name !== "" && !check(name) ){
-      setEvent([...events,{id:uuidv1(),name: name,chat: ["test"],member: [nameRef.current.value] }] )
+      setEvent([...events,{id:uuidv1(),name: name,classes: ["test"],member: [nameRef.current.value] }] )
       setRoomName(name)
     }
     eventNameRef.current.value = null
@@ -134,7 +137,7 @@ function App() {
       <br></br> 
       <input placeholder="group name" ref={userName} type ="text"/>  
       <Button width= {200} variant="contained" color="secondary" onClick= {Room}> Group </Button>
-      <Events Chat= {Chat} events = {events} deleteEvent = {deleteEvent} roomName = {roomName} ></Events>
+
     </div>
   );
 }
