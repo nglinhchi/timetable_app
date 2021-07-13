@@ -65,6 +65,7 @@ export default function Room(){
         for ( let i =0; i < list.length;i++){
             if (list[i].id === id){
                 list[i].classes.push({
+                    suggestClass: ["test"],
                     classType: typeRef.current.value,
                     unit: unitRef.current.value,
                     duaration: duarationRef.current.value,
@@ -106,7 +107,7 @@ export default function Room(){
         }
         for ( let i =0; i < list.length;i++){
             if (list[i].id === id){
-                list[i].member.push({name: member, status: false})
+                list[i].member.push({name: member, status: "not submitted"})
                 setEvent([...list])
                 break
             }
@@ -130,7 +131,7 @@ export default function Room(){
             if(list[i].name === roomName){
                 for (let j =0; j< list[i].member.length; j ++){
                     if  (list[i].member[j].name === user){
-                        list[i].member[j].status = true
+                        list[i].member[j].status = "submitted"
                         setEvent([...list])
                 }
             } 
@@ -156,7 +157,7 @@ export default function Room(){
         for (let i=0; i< events.length;i++){
             if (events[i].name=== roomName){
                 for (let j =0; j< events[i].member.length; j ++){
-                    if (events[i].member[j].status== false){
+                    if (events[i].member[j].status== "not submitted"){
                         return false
                     } 
                 }
@@ -164,6 +165,58 @@ export default function Room(){
             }
         } 
     }
+    function CalculateTimetable(){
+        var classes = 0
+        var member = 0
+        var list = events
+        var decidedClass = []
+        for( let i =0; i< events.length;i++){
+            if (events[i].name=== roomName){
+                classes = events[i].classes
+                member = events[i].member
+            }
+        }
+
+        for (let i =1; i < classes.length;i++){
+            if(decidedClass.length === 0){
+                decidedClass.push({unit: classes[i].unit, type: classes[i].classType, time: classes[i].time[0]})
+            }
+     
+            var collide = false
+            for( let j =0; j< classes[i].time.length;j++){
+                for (let z=0; z < decidedClass.length;z++){
+                    if (classes[i].time[j].start === decidedClass[z].time.start && classes[i].time[j].day === decidedClass[z].time.day ){
+                        collide =true
+                        break
+                    }
+                }
+                if(!collide){
+                    decidedClass.push({unit: classes[i].unit, type: classes[i].classType, time: classes[i].time[j]})
+                    break
+                }
+            }
+        }
+        for (let i=0; i < events.length; i++){
+            if (events[i].name=== roomName){
+                for(let j=0; j<events[i].classes.length;j++){
+                    for (let z=0; z<decidedClass.length;z++){
+                        if(events[i].classes[j].unit === decidedClass[z].unit && events[i].classes[j].classType === decidedClass[z].type){
+                            const time = decidedClass[z].time
+                            list[i].classes[j] = {...list[i].classes[j],suggestTime: time}
+                            console.log(list[i].classes[j])
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        const location = {
+            pathname: "/timetable",
+            state: list
+        }
+        history.push(location)
+    }
+
     useEffect(()=>{
         if (events.length !== 0 ){
           
@@ -197,7 +250,7 @@ export default function Room(){
                     <p>Current user:{user}</p>
                     <h1>{roomName}</h1>
                     {event.member.map(member => {
-                        return <p>{member.name}</p>
+                        return <p>{member.name}: {member.status} {}</p>
                     })}
                     <input ref={memberRef} type="text" ></input>
                     <button onClick= {()=>{
@@ -241,11 +294,7 @@ export default function Room(){
                         if(!checkMemberSubmit()){
                             return 
                         }
-                        const location = {
-                            pathname: "/timetable"
-                            
-                          }
-                          history.push(location)
+                        CalculateTimetable()
                     }}>See timetable</button>
     
                     {event.classes.map(classes =>{

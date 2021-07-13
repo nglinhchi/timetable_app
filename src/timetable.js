@@ -6,6 +6,8 @@ import { withRouter } from 'react-router-dom';
 import {useHistory} from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 function Timetable() {
+    const history = useHistory()
+    console.log(history.location.state)
     return(
         <div>
             <h3> Time table</h3>

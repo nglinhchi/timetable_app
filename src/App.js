@@ -42,11 +42,8 @@ function App() {
   function check(name){
     if (events.length ===0){return false}
     for (let i = 0; i < events.length; i++) {
-      console.log(i)
     }
     for (let i = 0; i < events.length; i++) {
-      console.log(events[i],i)
-      console.log(events[i].name === name)
       if(events[i].name === name){
         return true
       }
@@ -57,7 +54,7 @@ function App() {
   function addEvent(){
     const name = eventNameRef.current.value
     if (name !== "" && !check(name) ){
-      setEvent([...events,{id:uuidv1(),name: name,classes: ["test"],member: [{name: nameRef.current.value, status: false}] }] )
+      setEvent([...events,{id:uuidv1(),name: name,classes: ["test"],member: [{name: nameRef.current.value, status: "not submitted"}] }] )
       setRoomName(name)
     }
     eventNameRef.current.value = null
