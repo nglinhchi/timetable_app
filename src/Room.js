@@ -181,38 +181,50 @@ export default function Room(){
             if(decidedClass.length === 0){
                 decidedClass.push({unit: classes[i].unit, type: classes[i].classType, time: classes[i].time[0]})
             }
-     
+            else{
             var collide = false
+            console.log(classes[i])
             for( let j =0; j< classes[i].time.length;j++){
+                collide = false
                 for (let z=0; z < decidedClass.length;z++){
-                    if (classes[i].time[j].start === decidedClass[z].time.start && classes[i].time[j].day === decidedClass[z].time.day ){
+                    if (classes[i].time[j].start === decidedClass[z].time.start && classes[i].time[j].day === decidedClass[z].time.day  ){
                         collide =true
-                        break
+                    }
+                    
+                }
+                for (let z=0; z < decidedClass.length;z++){
+                    if(classes[i].unit === decidedClass[z].unit&& classes[i].classType===decidedClass[z].type){
+                    collide = true
                     }
                 }
+                
                 if(!collide){
+                    console.log("innn")
                     decidedClass.push({unit: classes[i].unit, type: classes[i].classType, time: classes[i].time[j]})
                     break
                 }
             }
         }
+        }
+        console.log(decidedClass)
+        var classesFinal=0
         for (let i=0; i < events.length; i++){
             if (events[i].name=== roomName){
-                for(let j=0; j<events[i].classes.length;j++){
+                for(let j=1; j<events[i].classes.length;j++){
                     for (let z=0; z<decidedClass.length;z++){
                         if(events[i].classes[j].unit === decidedClass[z].unit && events[i].classes[j].classType === decidedClass[z].type){
                             const time = decidedClass[z].time
                             list[i].classes[j] = {...list[i].classes[j],suggestTime: time}
-                            console.log(list[i].classes[j])
                             break
                         }
                     }
                 }
+                classesFinal = list[i].classes
             }
         }
         const location = {
             pathname: "/timetable",
-            state: list
+            state: classesFinal
         }
         history.push(location)
     }
