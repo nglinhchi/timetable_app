@@ -23,6 +23,18 @@ export default function Room(){
 
     function Chat(id){
         let list = events
+        for ( let i =0; i < list.length;i++){
+            if(list[i].name === roomName){
+                for (let j =0; j< list[i].member.length; j ++){
+                    if  (list[i].member[j].name === user){
+                        if (list[i].member[j].status === true){
+                            return
+                        }
+                        
+                }
+            } 
+         }
+        }
         if (
             typeRef.current.value === "" ||
             unitRef.current.value ==="" ||
@@ -33,16 +45,15 @@ export default function Room(){
             alert("Missing infomation")
             return null
         }
+        if (checkDayTime(typeRef.current.value,unitRef.current.value,user,startTimeRef.current.value, dayRef.current.value)){
+            alert("Repeated session")
+            return 
+        }
         for ( let i =0; i < events.length;i++){
             if( events[i].name === roomName){
                 for( let j= 1; j < events[i].classes.length;j++){
                     if (events[i].classes[j].unit ===unitRef.current.value && events[i].classes[j].classType ===typeRef.current.value && events[i].classes[j].belongTo ===user ){
                         list[i].classes[j].time.push({day: dayRef.current.value,start: startTimeRef.current.value})
-                        console.log(checkDayTime(typeRef.current.value,unitRef.current.value,user,startTimeRef.current.value, dayRef.current.value))
-                        if (checkDayTime(typeRef.current.value,unitRef.current.value,user,startTimeRef.current.value, dayRef.current.value)){
-                            alert("Repeated session")
-                            return 
-                        }
                         setEvent([...list])
                         startTimeRef.current.value=""
                         dayRef.current.value=""
@@ -95,7 +106,7 @@ export default function Room(){
         }
         for ( let i =0; i < list.length;i++){
             if (list[i].id === id){
-                list[i].member.push(member)
+                list[i].member.push({name: member, status: false})
                 setEvent([...list])
                 break
             }
@@ -103,11 +114,9 @@ export default function Room(){
     }
     function checkMember(member){
         for ( let i =0; i < events.length;i++){
-            console.log(events[i].name, roomName)
             if(events[i].name === roomName){
-                console.log("inn")
                 for (let j =0; j< events[i].member.length; j ++){
-                    if  (events[i].member[j] === member){
+                    if  (events[i].member[j].name === member){
                         return false
                     }
                 }
@@ -115,17 +124,26 @@ export default function Room(){
         }
         return true
     }
+    function submitClasses(){
+        const list =events
+        for ( let i =0; i < list.length;i++){
+            if(list[i].name === roomName){
+                for (let j =0; j< list[i].member.length; j ++){
+                    if  (list[i].member[j].name === user){
+                        list[i].member[j].status = true
+                        setEvent([...list])
+                }
+            } 
+         }
+        }
+    }
     function checkDayTime(type,unit, user,start,day){
-        console.log("1")
         for (let i=0; i< events.length;i++){
             if (events[i].name=== roomName){
-                console.log("2")
                 for (let j =1; j < events[i].classes.length; j++ ){
                     if (type === events[i].classes[j].classType && unit ===events[i].classes[j].unit && user ===events[i].classes[j].belongTo) {
-                        console.log("3")
                         for ( let z = 0; z < events[i].classes[j].time.length;z++){
                             if (start ===events[i].classes[j].time[z].start && day === events[i].classes[j].time[z].day )
-                            console.log("4")
                             return true
                         }
                         
@@ -133,6 +151,18 @@ export default function Room(){
                 }
             }
         }
+    }
+    function checkMemberSubmit(){
+        for (let i=0; i< events.length;i++){
+            if (events[i].name=== roomName){
+                for (let j =0; j< events[i].member.length; j ++){
+                    if (events[i].member[j].status== false){
+                        return false
+                    } 
+                }
+                return true
+            }
+        } 
     }
     useEffect(()=>{
         if (events.length !== 0 ){
@@ -159,6 +189,7 @@ export default function Room(){
         <Link style ={style} to="..">
             Home page
         </Link>
+
         {
             events.map(event => {
                 if (event.name === roomName){
@@ -166,7 +197,7 @@ export default function Room(){
                     <p>Current user:{user}</p>
                     <h1>{roomName}</h1>
                     {event.member.map(member => {
-                        return <p>{member}</p>
+                        return <p>{member.name}</p>
                     })}
                     <input ref={memberRef} type="text" ></input>
                     <button onClick= {()=>{
@@ -205,18 +236,40 @@ export default function Room(){
                         }
                         deleteEvent(event.id)
                     }} >Delete group</button>
-
+                    <button onClick={()=>{submitClasses()}}>Submit</button>
+                    <button onClick={()=>{
+                        if(!checkMemberSubmit()){
+                            return 
+                        }
+                        const location = {
+                            pathname: "/timetable"
+                            
+                          }
+                          history.push(location)
+                    }}>See timetable</button>
     
                     {event.classes.map(classes =>{
                         if(classes !== "test" && classes.belongTo===user){
                         return <div>
                                 <h1>{classes.unit}-{classes.classType}</h1>
                                 <button onClick={()=>{
+                                    const list =events
+                                    for ( let i =0; i < list.length;i++){
+                                        if(list[i].name === roomName){
+                                            for (let j =0; j< list[i].member.length; j ++){
+                                                if  (list[i].member[j].name === user){
+                                                    if (list[i].member[j].status === true){
+                                                        return
+                                                    }
+                                                    
+                                            }
+                                        } 
+                                     }
+                                    }
                                     if((!window.confirm("Delete this class?"))){
                                         return
                                     }
                                     
-                                    const list = events
                                     for ( let i =0; i < events.length;i++){
                                         if( events[i].name === roomName){
                                             for( let j= 1; j < events[i].classes.length;j++){
@@ -233,7 +286,9 @@ export default function Room(){
                                 {classes.time.map(time=>{
                                     return <p>{time.start}-{time.day}</p>
                                 })}
+                                
                             </div>
+                            
                         }
                     })}
                 </div>

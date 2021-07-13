@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Timetable from './timetable'
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router,Switch,Route,withRouter} from 'react-router-dom'
 import Room from './Room'
@@ -9,6 +10,8 @@ ReactDOM.render(
   <Router>
     <Switch>
     <Route exact path="/room/:name" component= {Room}></Route>
+    <Route exact path="/timetable" component= {Timetable}></Route>
+
     <Route exact path="/" component={App}></Route>
     </Switch>
   </Router>,

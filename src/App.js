@@ -57,7 +57,7 @@ function App() {
   function addEvent(){
     const name = eventNameRef.current.value
     if (name !== "" && !check(name) ){
-      setEvent([...events,{id:uuidv1(),name: name,classes: ["test"],member: [nameRef.current.value] }] )
+      setEvent([...events,{id:uuidv1(),name: name,classes: ["test"],member: [{name: nameRef.current.value, status: false}] }] )
       setRoomName(name)
     }
     eventNameRef.current.value = null
@@ -81,9 +81,8 @@ function App() {
   for (let i =0; i < events.length;i++){
     if (events[i].name === roomName){
       for(let j =0; j< events[i].member.length;j++){
-        if (events[i].member[j] === nameRef.current.value){
+        if (events[i].member[j].name === nameRef.current.value){
           if (check(roomName)){
-            console.log(nameRef.current.value)
             setRoomName(roomName)
             const location = {
             pathname: "/room/"+ roomName,
