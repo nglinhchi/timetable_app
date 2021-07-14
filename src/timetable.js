@@ -1,6 +1,7 @@
 import './App.css';
 import { useState,useEffect, useRef } from 'react';
 import firebase from './firebase'
+import TimeCom from './timetable-component';
 import { v1 as uuidv1 } from 'uuid'
 import { withRouter } from 'react-router-dom';
 import {useHistory} from 'react-router-dom';
@@ -12,6 +13,7 @@ function Timetable() {
     return(
         <div>
             <h3> Time table</h3>
+            <TimeCom list = {classes}></TimeCom>
             {classes.map(cls=>{
                 if (cls !== "test"){
                     console.log(cls)
