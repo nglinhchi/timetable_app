@@ -3,6 +3,7 @@ import { useState,useEffect,useRef } from "react"
 import {Link} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import firebase from './firebase'
+import TimeCom from './timetable-component';
 export default function Room(){
     const style = {
         color:'black'
@@ -20,6 +21,8 @@ export default function Room(){
     const db = firebase.database()
     const eventRef = db.ref("events")
     const user = history.location.state.user
+
+    const classes = history.location.state
 
     function Chat(id){
         let list = events
@@ -308,7 +311,10 @@ export default function Room(){
                         }
                         CalculateTimetable()
                     }}>See timetable</button>
-    
+
+                    {/* <p>{user}'s Timetable</p>
+                    <TimeCom list = {event.classes}></TimeCom> */}
+                    
                     {event.classes.map(classes =>{
                         if(classes !== "test" && classes.belongTo===user){
                         return <div>
