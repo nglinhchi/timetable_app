@@ -1,9 +1,11 @@
+import './Room.css';
 import React  from "react"
 import { useState,useEffect,useRef } from "react"
 import {Link} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import firebase from './firebase'
 import TimeCom from './timetable-component';
+
 export default function Room(){
     const style = {
         color:'black'
@@ -253,115 +255,147 @@ export default function Room(){
       },[])
 
     return(
-        <div>
-        <Link style ={style} to="..">
-            Home page
-        </Link>
 
+        <div class="body">
+        
+            <div id="bar">
+                <div id="home"><Link to="..">LOG OUT</Link></div>
+                <div class="lgo"><img scr="logo.png"></img></div>
+            </div>
+
+            
         {
             events.map(event => {
                 if (event.name === roomName){
-                    return <div>
-                    <p>Current user:{user}</p>
-                    <h1>{roomName}</h1>
-                    {event.member.map(member => {
-                        return <p>{member.name}: {member.status} {}</p>
-                    })}
-                    <input ref={memberRef} type="text" ></input>
-                    <button onClick= {()=>{
-                        const member = memberRef.current.value
-                        addMember(event.id,member)
-                        memberRef.current.value = null
-                    }}> Add member </button>
-                    <br></br>
 
-                    <input ref={typeRef} type ="text"/> 
-                    <label>Class type</label> 
-                    <br></br>
-                    <input ref={unitRef} type ="text"/> 
-                    <label>Unit</label> 
-                    <br></br>
-                    {/* <input value={user} ref={belongRef} type ="text"/> 
-                    <label>Member name</label> 
-                    <br></br> */}
-                    <input ref={duarationRef} type ="text"/> 
-                    <label>Duration</label> 
-                    <br></br>
-                    <input ref={startTimeRef} type ="text"/>  
-                    <label>Start time</label> 
-                    <br></br>
-                    <input ref={dayRef} type ="text"/> 
-                    <label>Day</label> 
-                    <br></br>
-                    <button onClick= {()=>{
-                        Chat(event.id)
-                        // typeRef.current.value = null
-                    }}> Add class </button>
-    
-                    <button onClick= {()=>{
-                         if((!window.confirm("Delete this group?"))){
-                            return
-                        }
-                        deleteEvent(event.id)
-                    }} >Delete group</button>
-                    <button onClick={()=>{submitClasses()}}>Submit</button>
-                    <button onClick={()=>{
-                        if(!checkMemberSubmit()){
-                            return 
-                        }
-                        CalculateTimetable()
-                    }}>See timetable</button>
-
-                    {/* <p>{user}'s Timetable</p>
-                    <TimeCom list = {event.classes}></TimeCom> */}
                     
-                    {event.classes.map(classes =>{
-                        if(classes !== "test" && classes.belongTo===user){
-                        return <div>
-                                <h1>{classes.unit}-{classes.classType}</h1>
-                                <button onClick={()=>{
-                                    const list =events
-                                    for ( let i =0; i < list.length;i++){
-                                        if(list[i].name === roomName){
-                                            for (let j =0; j< list[i].member.length; j ++){
-                                                if  (list[i].member[j].name === user){
-                                                    if (list[i].member[j].status === true){
-                                                        return
-                                                    }
-                                                    
-                                            }
-                                        } 
-                                     }
-                                    }
-                                    if((!window.confirm("Delete this class?"))){
-                                        return
-                                    }
+                    return <div id="content">
+
+                        {/* <nav> */}
+                        <div class="nav">
+
+                            <div class="first_col">
+                    
+                                <div class="bubble">
+                                    <h3>Username</h3>
+                                    <h1>{user}</h1>
+                                </div>
+
+                                <div class="bubble">
+                                    <h3>Group ID</h3>
+                                    <h1>{roomName}</h1>
                                     
-                                    for ( let i =0; i < events.length;i++){
-                                        if( events[i].name === roomName){
-                                            for( let j= 1; j < events[i].classes.length;j++){
-                                                if (events[i].classes[j].unit ===unitRef.current.value && events[i].classes[j].classType ===typeRef.current.value ){
-                                                    list[i].classes.splice(j,1)
-                                                    setEvent([...list])
-                                                    return
+                                    {/* MEMBERS - DISPLAY */}
+                                    <ul>
+                                        {event.member.map(member => {
+                                        return <li>{member.name} <span class="status">({member.status})</span> {}</li>
+                                        })}
+                                    </ul>
+
+                                    {/* DELETE GROUP - BUTTON */}
+                                    <button type="button" onClick= {()=>{
+                                        if((!window.confirm("Delete this group?"))){
+                                            return
+                                        }
+                                        deleteEvent(event.id)
+                                    }} >delete group</button>
+
+                                    {/* GENERATE - BUTTON */}
+                                    <button type="button" onClick={()=>{
+                                        if(!checkMemberSubmit()){
+                                            return 
+                                        }
+                                        CalculateTimetable()
+                                    }}>generate timetable</button>
+                                </div>
+
+                                <div class="add bubble">
+                                    <input ref={memberRef} type="text"placeholder="New member"></input>
+                                    <button type="button" onClick= {()=>{
+                                        const member = memberRef.current.value
+                                        addMember(event.id,member)
+                                        memberRef.current.value = null
+                                    }}>add</button>
+                                </div>
+
+                            </div>
+
+                            <div class="second_col">
+
+                                <div class="form bubble">
+                                    <h1>New Class</h1>
+                                    <input ref={unitRef} type ="text" placeholder="Unit (e.g. FIT1008)"></input>
+                                    <input ref={typeRef} type ="text" placeholder="Type (e.g. workshop)"></input>
+                                    <input ref={duarationRef} type ="text" placeholder="Duration (e.g. 2)"></input>
+                                    <input ref={dayRef} type ="text" placeholder="Day (e.g. Monday)"></input>
+                                    <input ref={startTimeRef} type ="text" placeholder="Time (e.g. 1400)"></input>
+                                    <button id="btn_addclass" class="btn_important" onClick= {()=>{
+                                        Chat(event.id)
+                                    }}>add</button>
+                                </div>
+    
+                            </div>
+
+                        </div>
+                        {/* </nav> */}
+
+
+                        <div class="timetable">
+                    
+                            {/* TIMETABLE ALLOCATION LIST - DISPLAY */}
+                            {event.classes.map(classes =>{
+                                if(classes !== "test" && classes.belongTo===user){
+                                return <div class="class">
+
+                                    <div class="header">
+                                        <h4>{classes.unit}</h4>
+                                        <h5>{classes.classType}</h5>
+                                    </div>
+                                    <ul>
+                                        {classes.time.map(time=>{
+                                            return <li>{time.day}, {time.start}</li>
+                                        })}
+                                    </ul>
+                                    <button onClick={()=>{
+                                            const list =events
+                                            for ( let i =0; i < list.length;i++){
+                                                if(list[i].name === roomName){
+                                                    for (let j =0; j< list[i].member.length; j ++){
+                                                        if  (list[i].member[j].name === user){
+                                                            if (list[i].member[j].status === true){
+                                                                return
+                                                            }
+                                                        }
+                                                    } 
                                                 }
                                             }
-                                        }
-                                    }
+                                            if((!window.confirm("Delete this class?"))){
+                                                return
+                                            }
+                                            for ( let i =0; i < events.length;i++){
+                                                if( events[i].name === roomName){
+                                                    for( let j= 1; j < events[i].classes.length;j++){
+                                                        if (events[i].classes[j].unit ===unitRef.current.value && events[i].classes[j].classType ===typeRef.current.value ){
+                                                            list[i].classes.splice(j,1)
+                                                            setEvent([...list])
+                                                            return
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }}>delete</button>
+                                    </div> 
+                                }
+                            })}
 
-                                }}>Delete class</button>
-                                {classes.time.map(time=>{
-                                    return <p>{time.start}-{time.day}</p>
-                                })}
-                                
-                            </div>
-                            
-                        }
-                    })}
-                </div>
+                        <button id="btn_submit" class="btn_important" onClick={()=>{submitClasses()}}>Submit all</button>
+
+                        </div>
+                    </div>
                 }
             })
         }
+            
         </div>
         
     )

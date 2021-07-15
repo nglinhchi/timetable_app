@@ -1,9 +1,282 @@
-.Room
+/* UNIVERSAL */
+
+.body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica;
+  background: linear-gradient(120deg, #7F7FD5, #86A8E7,#91EAE4);
+  height: 100vh;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+img {
+  width: 200px;
+}
+
+button {
+  text-transform: uppercase;
+  width: fit-content;
+  border: solid 1px;
+  background: #0388a3;
+  border-radius: 25px;
+  font-size: 12px;
+  color: white; 
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  padding: 5px 10px;
+}
+
+button:hover {
+  border-color: #0388a3 ;
+  transition: .5s;
+}
+
+.btn_important {
+  font-size: 14px;
+  padding: 10px;
+}
+
+.btn_important:hover{
+  border-color: #c498ff ;
+  background: #c498ff;
+  transition: 0.5s;
+}
+
+input {
+  width: 100%;
+  padding: 0 5px;
+  height: 20px;
+  font-size: 14px;
+  border: none;
+  background: none;
+  outline: none;
+  border-bottom: solid 2px #adadad;
+  margin-right: 10px;
+}
+
+input::placeholder {
+  color: #c4c4c4;
+}
+
+input:focus {
+  border-color: #005dba;
+  transition: .5s;
+}
+
+
+
+
+
+/* NAVIGATION BAR */
+
+#bar {
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 15px -6px rgba(0, 0, 0,0.2);
+}
+
+#home {
+  background:black;
+  width: fit-content;
+  font-weight: bold;
+  padding: 10px 20px;
+  height: fit-content;
+  position: relative;
+  border-radius: 5px;
+  font-size:12px;
+  margin: 20px;
+  color: black;
+}
+
+#bar .logo {
+  height:fit-content;
+  width: fit-content;
+  margin: 0 20px;
+}
+
+
+
+
+/* CONTENT >> NAVIGATION */
+
+#content {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav {
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+}
+
+.bubble {
+  padding: 20px;
+  margin: 20px 20px 20px 0;
+  border-radius: 20px;
+  background: white;
+}
+
+
+
+
+/* CONTENT >> NAVIGATION >> COLUMN 01 */
+
+  /* BUBBLE */
+  .bubble h3 {
+      font-size: 14px;
+      font-weight: normal;
+  }
+
+  .bubble h1 {
+      font-size: 35px;
+      color: #c498ff;
+  }
+
+  /* MEMBER LIST */
+  
+  .bubble .status {
+      font-weight: normal;
+      color: #adadad;
+  }
+
+  .bubble ul {
+      margin: 20px 0;
+  }
+
+  .bubble li {
+      font-weight: bold;
+      color: black;
+      line-height: 20px;
+  }
+
+  /* ADD NEW MEMBER */
+  
+  .add {
+      display: flex;
+      flex-direction: row;
+      width: 285px;
+  }
+
+
+
+
+/* CONTENT >> NAVIGATION >> COLUMN 02 */
+
+  .form {
+      width: 200px;
+      background: rgba(255,255,255,1);
+  }
+
+  .form h1 {
+      color: black;
+      text-align: center;
+      font-size: 25px;
+      margin-bottom: 20px;
+  }
+
+  .form input {
+      margin: 10px;
+      width: 170px;
+  }
+
+  #btn_addclass {
+      border-color: rgba(255,255,255,1);
+      margin-top: 25px;
+      width: 100%;
+  }
+
+
+
+  
+/* CONTENT >> MAIN */
+
+.timetable {
+  padding: 10px;
+  background: rgba(255,255,255,0.5);
+  margin: 20px;
+  margin-left: 0;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+  /* CLASS */
+
+  .class {
+      width: 18%;
+      height: fit-content;
+      background: white;
+      margin: 1%;
+      border-radius: 20px;
+  }
+
+  .class .header {
+      padding: 10px;
+      border-bottom: solid 1px silver;
+  }
+
+  .class h5 {
+      color: #00748c;
+  }
+
+  .class ul {
+      padding: 10px;
+      font-size: 13px;
+  }
+
+  .class button {
+      margin: 0 10% 10px;
+      width: 80%;
+      background: #1a1a1a;
+  }
+
+  #btn_submit {
+      border-color: rgba(255,255,255,0.3);
+      margin: 10px;
+      margin-top: 20px;
+      width: 100%;
+  }
+
+
+
+
+
+
+
+
+  
+  /*
+  
+  .Room
  {
     text-align: center;
   }
-  
-  /* .Room
+
+  .Room
   -logo {
     height: 40vmin;
     pointer-events: none;
