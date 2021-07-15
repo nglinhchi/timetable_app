@@ -5,6 +5,8 @@ import { v1 as uuidv1 } from 'uuid'
 import { withRouter } from 'react-router-dom';
 import {useHistory} from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
+import logo from './logo.png';
+
 function App() {
   
   // console.log(store)
@@ -122,11 +124,12 @@ function App() {
   return (
     <div className="App" >  
       <div class="everything">
+            <div class="logo"><img src={logo}></img></div>
             {/* <div class="logo"><image src="logo.png" alt=""/></div> */}
             <div class="center">
                 <h1>Login</h1>
                 <div class="form">
-                    <div class="txt_field">
+                    <div class="txt_field" id="username">
                         <input type="text" ref={nameRef} required></input>
                         <span></span>
                         <label>Username</label>

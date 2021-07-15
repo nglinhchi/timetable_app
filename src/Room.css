@@ -56,7 +56,7 @@ img {
   transition: 0.5s;
 }
 
-input {
+.bubble input {
   width: 100%;
   padding: 0 5px;
   height: 20px;
@@ -68,11 +68,11 @@ input {
   margin-right: 10px;
 }
 
-input::placeholder {
+.bubble input::placeholder {
   color: #c4c4c4;
 }
 
-input:focus {
+.bubble input:focus {
   border-color: #005dba;
   transition: .5s;
 }

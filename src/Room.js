@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import firebase from './firebase'
 import TimeCom from './timetable-component';
+import logo from './logo.png';
 
 export default function Room(){
     const style = {
@@ -254,13 +255,15 @@ export default function Room(){
         })
       },[])
 
+    //   asd
+    
     return(
 
         <div class="body">
         
             <div id="bar">
                 <div id="home"><Link to="..">LOG OUT</Link></div>
-                <div class="lgo"><img scr="logo.png"></img></div>
+                <div class="logo"><img src={logo}></img></div>
             </div>
 
             
