@@ -375,7 +375,8 @@ export default function Room(){
                                             for ( let i =0; i < events.length;i++){
                                                 if( events[i].name === roomName){
                                                     for( let j= 1; j < events[i].classes.length;j++){
-                                                        if (events[i].classes[j].unit ===unitRef.current.value && events[i].classes[j].classType ===typeRef.current.value ){
+                                                        if (events[i].classes[j].unit ===classes.unit && events[i].classes[j].classType ===classes.classType ){
+                                                            console.log("innn")
                                                             list[i].classes.splice(j,1)
                                                             setEvent([...list])
                                                             return
