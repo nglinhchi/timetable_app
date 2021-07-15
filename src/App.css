@@ -1,7 +1,13 @@
 .App {
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica;
+  background: linear-gradient(120deg, #7F7FD5, #86A8E7,#91EAE4);
+  height: 100vh;
+  overflow: hidden;
 }
 
+/*
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +41,126 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+*/
+
+.everything {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+}
+
+button {
+  text-transform: uppercase;
+  width: 100%;
+  height: 50px;
+  border: solid 1px;
+  background: #0388a3;
+  border-radius: 25px;
+  font-size: 18px;
+  color: white; 
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  border-color: #c498ff ;
+  background: #c498ff;
+  transition: .5s;
+}
+
+.center {
+  width: 500px;
+  background: white;
+  border-radius: 20px;
+}
+
+.center h1 {
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: solid 1px silver;
+}
+
+.center .form {
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.form .txt_field{
+  position: relative;
+  border-bottom: solid 2px #adadad;
+  margin: 30px 0;
+}
+
+.txt_field input {
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.txt_field label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  color: #adadad;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.txt_field span::before {
+  content: "";
+  position: absolute;  
+  top: 40px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #005dba;
+}
+
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label {
+  top: -5px;
+  color: #005dba;
+}
+
+.txt_field input:focus ~ span::before,
+.txt_field input:valid ~ span::before {
+  width: 100%;
+}
+
+#join {
+  margin: 0 0 30px 0;
+}
+
+.block {
+  display: inline;
+  width: 100%;
+}
+
+.block-group > span {
+  margin: 0 20px;
+}
+
+.block-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+}
+
+image {
+  width: 300px;
 }

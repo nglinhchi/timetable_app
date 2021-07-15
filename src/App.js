@@ -9,9 +9,6 @@ import {useHistory} from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 function App() {
   
-
-
-
   // console.log(store)
   // const eventRef = db.ref("events")
   // const eventsss = 
@@ -98,7 +95,6 @@ function App() {
  }
 
 
-
  function Chat(id,chat){
   let list = events
   for ( let i =0; i < list.length;i++){
@@ -126,21 +122,43 @@ function App() {
   },[events])
 
   return (
-    <div className="App" >
-      <input type="text" ref={nameRef} placeholder= "your name" ></input>
-      <input placeholder="new group"  ref={eventNameRef} type="text"/>
-      <Button variant="contained" color="secondary" onClick= {addEvent}> Add group</Button>
-      <br></br> 
-      <input placeholder="group name" ref={userName} type ="text"/>  
-      <Button width= {200} variant="contained" color="secondary" onClick= {Room}> Group </Button>
+    <div className="App" >  
+      <div class="everything">
+            {/* <div class="logo"><image src="logo.png" alt=""/></div> */}
+            <div class="center">
+                <h1>Login</h1>
+                <div class="form">
+                    <div class="txt_field">
+                        <input type="text" ref={nameRef} required></input>
+                        <span></span>
+                        <label>Username</label>
+                    </div>
+                    <div class="block-group">
+                        <div class="block">
+                            <div class="txt_field">
+                              <input ref={eventNameRef} type="text" required></input>
+                                <span></span>
+                                <label>New Group</label>
+                            </div>
+                            <button type="button" onClick= {addEvent}>create</button> 
+                        </div>
+                        <span></span>
+                        <div class="block">
+                            <div class="txt_field">
+                                <input ref={userName} type ="text" required></input>
+                                <span></span>
+                                <label>Group ID</label>
+                            </div>
+                            {/* <Button width= {200} variant="contained" color="secondary" > Group </Button> */}
+                            <button type="button" id="join" onClick= {Room}>join</button> 
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
   );
 }
 
 export default withRouter(App);
-
-
-
-
-
