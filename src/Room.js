@@ -293,7 +293,7 @@ export default function Room(){
                                     </ul>
 
                                     {/* DELETE GROUP - BUTTON */}
-                                    <button type="button" onClick= {()=>{
+                                    <button class="btn_normal" onClick= {()=>{
                                         if((!window.confirm("Delete this group?"))){
                                             return
                                         }
@@ -301,7 +301,7 @@ export default function Room(){
                                     }} >delete group</button>
 
                                     {/* GENERATE - BUTTON */}
-                                    <button type="button" onClick={()=>{
+                                    <button class="btn_normal" onClick={()=>{
                                         if(!checkMemberSubmit()){
                                             return 
                                         }
@@ -311,7 +311,7 @@ export default function Room(){
 
                                 <div class="add bubble">
                                     <input ref={memberRef} type="text"placeholder="New member"></input>
-                                    <button type="button" onClick= {()=>{
+                                    <button class="btn_normal"  onClick= {()=>{
                                         const member = memberRef.current.value
                                         addMember(event.id,member)
                                         memberRef.current.value = null
@@ -388,7 +388,8 @@ export default function Room(){
                                 }
                             })}
 
-                        <button id="btn_submit" class="btn_important" onClick={()=>{submitClasses()}}>Submit all</button>
+                             <button id="btn_submit" class="btn_important" onClick={()=>{submitClasses()}}>Submit all</button>
+
 
                         </div>
                     </div>
