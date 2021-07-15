@@ -27,6 +27,11 @@ body {
 
 .info {
     cursor:default;
+    padding: 10px;
+  text-align: center;
+
+  color: white;
+  font-size: 30px;
 }
 
 .name{

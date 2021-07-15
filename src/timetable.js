@@ -9,18 +9,22 @@ import { Button, TextField } from '@material-ui/core';
 function Timetable() {
     const history = useHistory()
     const classes = history.location.state
+    const style = {
+        color:'white',
+        size: '50'
+    }
     return(
-        <div>
-            <h3> Time table</h3>
+        <div className="App">
+            {/* <h3 style="position: absolute top: 50px "> Time table</h3> */}
             <TimeCom list = {classes}></TimeCom>
-            {classes.map(cls=>{
+            {/* {classes.map(cls=>{
                 if (cls !== "test"){
                 return <div>
-                    <h1>{cls.unit}-{cls.classType}-{cls.belongTo}</h1>
-                    <p>{cls.suggestTime.start} -{cls.suggestTime.day} </p>
+                    <h1  >{cls.unit}-{cls.classType}-{cls.belongTo}</h1>
+                    <p style={style}>{cls.suggestTime.start} -{cls.suggestTime.day} </p>
                 </div>
                 }                
-            })}
+            })} */}
         </div>
     )
 }
