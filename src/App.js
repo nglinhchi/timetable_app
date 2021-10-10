@@ -120,7 +120,10 @@ function App() {
       history.push(location)
     }
   },[events])
-
+  useEffect(()=>{
+    nameRef.current.value = "Bill"
+    userName.current.value = "Demo1"
+  },[])
   return (
     <div className="App" >  
       <div class="everything">
